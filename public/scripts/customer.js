@@ -1,10 +1,9 @@
 const isDriver = false;
 const markers = {};
-const inited = false;
+let inited = false;
 const socket = io();
 const isservice = false;
 const send = {};
-const key;
 
 map.locate({
   maxZoom: 15,
@@ -12,16 +11,13 @@ map.locate({
   enableHighAccuracy: true,
 });
 
-map.on("locationfound", success);
-map.on("zoomend", _changeLocateMaxZoom);
-
-const _changeLocateMaxZoom = (e) => {
+const _changeLocateMaxZoom = e => {
   if (map._locateOptions) {
     map._locateOptions.maxZoom = map.getZoom();
   }
-}
+};
 
-const init = (position) => {
+const init = position => {
   latLong = getLatLong(position);
   map.setView(latLong, 15);
   mymarker = L.Marker
@@ -42,18 +38,18 @@ const init = (position) => {
     latLong: latLong,
   });
   inited = true;
-}
+};
 
-const success = (pos) => {
+const success = pos => {
   if (!inited) init(pos);
   else mymarker.moveTo(getLatLong(pos), 5000);
-}
+};
 
-const getLatLong = (position) => {
+const getLatLong = position => {
   return [position.latitude, position.longitude];
-}
+};
 
-socket.on("initDriverLoc", (drivers) => {
+socket.on("initDriverLoc", drivers => {
   _.each(drivers, function(driver) {
     markers[driver.id] = L.Marker
       .movingMarker([driver.latLong, driver.latLong], [0], {
@@ -65,7 +61,7 @@ socket.on("initDriverLoc", (drivers) => {
   });
 });
 
-socket.on("initservicerLoc", (drivers) => {
+socket.on("initservicerLoc", drivers => {
   _.each(drivers, function(driver) {
     markers[driver.id] = L.Marker
       .movingMarker([driver.latLong, driver.latLong], [0], {
@@ -77,7 +73,7 @@ socket.on("initservicerLoc", (drivers) => {
   });
 });
 
-socket.on("driverAdded", (driver) => {
+socket.on("driverAdded", driver => {
   console.log("New driver joined.");
   markers[driver.id] = L.Marker
     .movingMarker([driver.latLong, driver.latLong], [0], {
@@ -88,7 +84,7 @@ socket.on("driverAdded", (driver) => {
     .addTo(map);
 });
 
-socket.on("servicemanAdded", (driver) => {
+socket.on("servicemanAdded", driver => {
   console.log("New driver joined.");
   markers[driver.id] = L.Marker
     .movingMarker([driver.latLong, driver.latLong], [0], {
@@ -99,37 +95,37 @@ socket.on("servicemanAdded", (driver) => {
     .addTo(map);
 });
 
-socket.on("driverRemoved", (driver) => {
+socket.on("driverRemoved", driver => {
   console.log("driver left.");
   map.removeLayer(markers[driver.id]);
 });
 
-socket.on("serviceRemoved", (serviceman) => {
+socket.on("serviceRemoved", serviceman => {
   console.log("driver left.");
   map.removeLayer(markers[serviceman.id]);
 });
 
-socket.on("driverLocChanged", (data) => {
+socket.on("driverLocChanged", data => {
   const loc = markers[data.id].getLatLng();
   const angle = setangle(loc.lat, loc.lng, data.latLong[0], data.latLong[1]);
   markers[data.id].setIconAngle(angle);
   markers[data.id].moveTo(data.latLong, 5000);
 });
 
-socket.on("serviceLocChanged", (data) => {
+socket.on("serviceLocChanged", data => {
   const loc = markers[data.id].getLatLng();
   const angle = setangle(loc.lat, loc.lng, data.latLong[0], data.latLong[1]);
   markers[data.id].moveTo(data.latLong, 5000);
 });
 
-const nearby = (data) => {
+const nearby = data => {
   send[0] = mymarker.getLatLng();
   send[1] = data;
   console.log("send[0]=" + send[0] + "send[1]=" + send[1]);
   socket.emit("book", send);
-}
+};
 
-socket.on("bookid", (id) => {
+socket.on("bookid", id => {
   if (id[0] == 0) {
     confirm("Not available");
   } else {
@@ -169,8 +165,7 @@ const setangle = (slat, slong, dlat, dlong) => {
   angle1 = Math.atan2(y, x);
   angle1 = 180 * angle1 / Math.PI;
   return angle1;
-}
+};
 
-const getLatLong = (position) => {
-  return [position.latitude, position.longitude];
-}
+map.on("locationfound", success);
+map.on("zoomend", _changeLocateMaxZoom);

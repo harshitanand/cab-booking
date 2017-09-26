@@ -8,10 +8,6 @@ map.locate({
   watch: true,
 });
 
-map.on("locationfound", success);
-map.on("click", onMapClick);
-map.on("zoomend", _changeLocateMaxZoom);
-
 const _changeLocateMaxZoom = e => {
   if (map._locateOptions) {
     map._locateOptions.maxZoom = map.getZoom();
@@ -104,3 +100,7 @@ const error = err => {
 const getLatLong = position => {
   return [position.latitude, position.longitude];
 };
+
+map.on("locationfound", success);
+map.on("click", onMapClick);
+map.on("zoomend", _changeLocateMaxZoom);

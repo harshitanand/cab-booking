@@ -1,4 +1,4 @@
-import express from "express";
+const express = require("express");
 const app = express(); //instance of express
 const server = require("http").Server(app);
 const io = require("socket.io")(server);

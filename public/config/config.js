@@ -1,42 +1,38 @@
-const map = L.map("map");
-const mymarker;
-
-const mapLink = "https://mts1.google.com/vt/lyrs=m@186112443&hl=x-local&src=app&x={x}&y={y}&z={z}&s=Galile";
-const maxZoom = 25;
-const minZoom = 10;
-const worldCopyJump = false;
-const attribution = 'Map data &copy; <a href="https://maps.google.com">Google</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
+var map = L.map("map");
+var mymarker;
 
 if ("geolocation" in navigator) {
-  console.log("Location is found");
+  console.log("Location found");
 } else {
-  prompt("App needs your location access");
+  prompt("Allow location access");
 }
 
 L.tileLayer(
-  mapLink, {
-    attribution,
-    maxZoom,
-    minZoom,
-    worldCopyJump,
+  "https://mts1.google.com/vt/lyrs=m@186112443&hl=x-local&src=app&x={x}&y={y}&z={z}&s=Galile",
+  {
+    attribution:
+      'Map data &copy; <a href="https://maps.google.com">Google</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+    maxZoom: 20,
+    minZoom: 5,
+    worldCopyJump: false,
   }
 ).addTo(map);
 
-L.easyButton("fa-location-arrow", (btn, map) => {
+L.easyButton("fa-location-arrow", function(btn, map) {
   map.setView(mymarker.getLatLng(), 15);
 }).addTo(map);
 
-const carIcon = L.icon({
-  iconUrl: "/media/car.png",
+var carIcon = L.icon({
+  iconUrl: "/media/mycar.png",
   iconSize: [40, 40],
 });
 
-const clientIcon = L.icon({
-  iconUrl: "/media/user.png",
+var clientIcon = L.icon({
+  iconUrl: "/media/service.png",
   iconSize: [25, 25],
 });
 
-const serviceIcon = L.icon({
-	iconUrl: "/media/service.png",
-	iconSize: [30, 30]
+var serviceIcon = L.icon({
+  iconUrl: "/media/service.png",
+  iconSize: [30, 30],
 });
