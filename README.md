@@ -11,5 +11,5 @@ Run node index.js to start the development server and open up the respective url
 
 ## Preview ##
 If everything goes right,you will be able to see the folllowing in your browser window
-![cust.png]()
+![cust.png](https://github.com/harshitanand/cab-booking/blob/master/public/media/preview.png)
 
