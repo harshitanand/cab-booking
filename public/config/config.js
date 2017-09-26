@@ -27,11 +27,16 @@ L.easyButton("fa-location-arrow", (btn, map) => {
 }).addTo(map);
 
 const carIcon = L.icon({
-  iconUrl: "/images/car.png",
+  iconUrl: "/media/car.png",
   iconSize: [40, 40],
 });
 
 const clientIcon = L.icon({
-  iconUrl: "/images/user.png",
+  iconUrl: "/media/user.png",
   iconSize: [25, 25],
+});
+
+const serviceIcon = L.icon({
+	iconUrl: "/media/service.png",
+	iconSize: [30, 30]
 });
