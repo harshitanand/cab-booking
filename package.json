@@ -1,0 +1,24 @@
+{
+  "name": "cab-booking",
+  "version": "1.0.0",
+  "description": "App for booking cabs on demand",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/harshitanand/cab-booking.git"
+  },
+  "author": "Harshit Anand <harshitanand94@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/harshitanand/cab-booking/issues"
+  },
+  "homepage": "https://github.com/harshitanand/cab-booking#readme",
+  "dependencies": {
+    "express": "^4.15.5",
+    "socket.io": "^2.0.3"
+  },
+  "devDependencies": {}
+}
